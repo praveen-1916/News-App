@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Navbar from './Navbar';
+import News from './News';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import LoadingBar from 'react-top-loading-bar'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default class App extends Component {
+
+  state = { progress: 0 };
+
+  setProgress = (value) => {
+    this.setState({ progress: value })
+  }
+
+  render() {
+    let pageSize = 30;
+    return (
+      <>
+        <Router>
+          <LoadingBar color='#f11946' height={3} progress={this.state.progress} />
+
+          <Navbar />
+          <Routes>
+            <Route exact path='/' element={<News progress={this.setProgress} key='general' pageSize={pageSize} category='general' />} />
+            <Route exact path='/business' element={<News progress={this.setProgress} key='business' pageSize={pageSize} category='business' />} />
+            <Route exact path='/entertainment' element={<News progress={this.setProgress} key='entertainment' pageSize={pageSize} category='entertainment' />} />
+            <Route exact path='/health' element={<News progress={this.setProgress} key='health' pageSize={pageSize} category='health' />} />
+            <Route exact path='/science' element={<News progress={this.setProgress} key='science' pageSize={pageSize} category='science' />} />
+            <Route exact path='/sports' element={<News progress={this.setProgress} key='sports' pageSize={pageSize} category='sports' />} />
+            <Route exact path='/technology' element={<News progress={this.setProgress} key='technology' pageSize={pageSize} category='technology' />} />
+          </Routes>
+        </Router>
+      </>
+
+    )
+  }
 }
-
-export default App;
